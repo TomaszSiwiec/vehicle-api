@@ -1,0 +1,80 @@
+{
+	"info": {
+		"_postman_id": "67ab5f87-ae49-48ff-8df3-fd4240abff27",
+		"name": "Vehicle-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9056926"
+	},
+	"item": [
+		{
+			"name": "storage-service",
+			"item": [
+				{
+					"name": "addFile",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ts/Desktop/tabliczka.dxf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/files/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadFile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ts/Desktop/tabliczka.dxf",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/files/download/tabliczka.dxf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"download",
+								"tabliczka.dxf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
