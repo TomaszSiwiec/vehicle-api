@@ -20,20 +20,19 @@
 								{
 									"key": "file",
 									"type": "file",
-									"src": "/C:/Users/ts/Desktop/tabliczka.dxf"
+									"src": "/C:/Users/ts/Desktop/Equistork/Wieszak/Rysunek6.bak"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/files/upload",
+							"raw": "http://localhost:8080/files",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"files",
-								"upload"
+								"files"
 							]
 						}
 					},
@@ -59,7 +58,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8080/files/download/tabliczka.dxf",
+							"raw": "http://localhost:8080/files/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -67,8 +66,27 @@
 							"port": "8080",
 							"path": [
 								"files",
-								"download",
-								"tabliczka.dxf"
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/files/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"1"
 							]
 						}
 					},

@@ -6,6 +6,7 @@ import java.io.InputStream;
 
 public interface FileService {
 
-    void uploadFile(MultipartFile file);
-    InputStream downloadFile(String fileName);
+    Long uploadFile(MultipartFile file);
+    InputStream downloadFile(long id);
+    void deleteFile(long id);
 }

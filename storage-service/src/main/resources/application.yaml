@@ -1,6 +1,19 @@
 spring:
   application:
     name: storage-service
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
 
 aws:
   access-key: ${AWS_ACCESS_KEY_ID}

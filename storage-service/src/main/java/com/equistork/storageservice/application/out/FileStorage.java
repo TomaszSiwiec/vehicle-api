@@ -5,5 +5,5 @@ import java.io.InputStream;
 public interface FileStorage {
 
     void saveFile(String fileName, InputStream fileContent);
-    InputStream getFile(String fileName);
+    InputStream getFile(long id);
 }

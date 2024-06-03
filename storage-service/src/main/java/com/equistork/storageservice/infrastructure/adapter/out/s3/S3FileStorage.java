@@ -2,7 +2,10 @@ package com.equistork.storageservice.infrastructure.adapter.out.s3;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.equistork.storageservice.application.out.FileRecordRepository;
 import com.equistork.storageservice.application.out.FileStorage;
+import com.equistork.storageservice.domain.model.FileMetadata;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.io.InputStream;
 class S3FileStorage implements FileStorage {
 
     private final AmazonS3 amazonS3;
+    private final FileRecordRepository repository;
     @Value("${aws.s3.bucket-name}")
     private String bucketName;
 
@@ -24,7 +28,9 @@ class S3FileStorage implements FileStorage {
     }
 
     @Override
-    public InputStream getFile(String fileName) {
-        return amazonS3.getObject(bucketName, fileName).getObjectContent();
+    public InputStream getFile(long id) {
+        FileMetadata file = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("File with id = " + id + " not found"));
+        return amazonS3.getObject(bucketName, file.getFilename()).getObjectContent();
     }
 }
