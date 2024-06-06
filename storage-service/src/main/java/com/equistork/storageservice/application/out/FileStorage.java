@@ -4,6 +4,9 @@ import java.io.InputStream;
 
 public interface FileStorage {
 
-    void saveFile(String fileName, InputStream fileContent);
-    InputStream getFile(long id);
+    void saveFile(String fileKey, InputStream fileContent);
+
+    String getFile(String fileKey);
+
+    void deleteFile(String fileKey);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +26,14 @@ class FileServiceImpl implements FileService {
     public Long uploadFile(MultipartFile file) {
         try (InputStream fileContent = file.getInputStream()) {
             String fileName = file.getOriginalFilename();
+            UUID uuid = UUID.randomUUID();
             FileMetadata fileEntity = FileMetadata.builder()
+                    .folderName(uuid.toString())
                     .size(file.getSize())
                     .filename(fileName)
                     .extension(getFileExtension(fileName))
                     .build();
-            fileStorage.saveFile(file.getOriginalFilename(), fileContent);
+            fileStorage.saveFile(fileEntity.getFileKey(), fileContent);
             fileRecordRepository.save(fileEntity);
             return fileEntity.getId();
         } catch (IOException e) {
@@ -39,14 +42,18 @@ class FileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStream downloadFile(long id) {
-        return fileStorage.getFile(id);
+    public String downloadFile(long id) {
+        FileMetadata file = fileRecordRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("File with id = " + id + " not found"));
+        return fileStorage.getFile(file.getFileKey());
     }
 
     @Override
+    @Transactional
     public void deleteFile(long id) {
         FileMetadata file = fileRecordRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity with id = " + id + " not found"));
         fileRecordRepository.delete(file);
+        fileStorage.deleteFile(file.getFileKey());
     }
 
     private String getFileExtension(String fileName) {
