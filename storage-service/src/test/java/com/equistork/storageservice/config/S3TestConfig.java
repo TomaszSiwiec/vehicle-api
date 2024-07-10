@@ -10,24 +10,17 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
+import static com.equistork.storageservice.config.DockerizedAWSInitializer.AWS_CONTAINER;
+
 @TestConfiguration
 public class S3TestConfig {
 
-    @Value("${aws.access-key}")
-    private String accessKey;
-
-    @Value("${aws.secret-key}")
-    private String secretKey;
-
-    @Value("${aws.region}")
-    private String region;
-
     @Bean
     @Primary
-    AmazonS3 s3Client() {
-        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+    public AmazonS3 s3Client() {
+        BasicAWSCredentials awsCredentials = new BasicAWSCredentials(AWS_CONTAINER.getAccessKey(), AWS_CONTAINER.getSecretKey());
         return AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.fromName(region))
+                .withRegion(Regions.fromName(AWS_CONTAINER.getRegion()))
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
                 .build();
     }

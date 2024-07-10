@@ -1,7 +1,8 @@
 package com.equistork.storageservice.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,8 +12,9 @@ import org.testcontainers.utility.DockerImageName;
 
 import static org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT;
 
-@Slf4j
 public class PostgresTestContainerInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostgresTestContainerInitializer.class);
 
     private static final DockerImageName DOCKER_IMAGE_NAME = DockerImageName.parse("postgres:14.5-alpine");
 
@@ -28,7 +30,7 @@ public class PostgresTestContainerInitializer implements ApplicationContextIniti
                 .withDatabaseName("postgres")
                 .start();
 
-        log.warn("TestContainers Postgres JDBC: {}",
+        LOGGER.warn("TestContainers Postgres JDBC: {}",
                 container.getJdbcUrl() + "&user=%s&password=%s".formatted(container.getUsername(), container.getPassword()));
 
         TestPropertyValues.of(
