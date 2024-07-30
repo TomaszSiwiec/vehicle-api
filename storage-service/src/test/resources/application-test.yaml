@@ -1,0 +1,9 @@
+cloud:
+  aws:
+    credentials:
+      access-key: a
+      secret-key: a
+    region:
+      region: eu-west-3
+    endpoint:
+      url: http://127.0.0.1:4566
